@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE_NAME = 'scientificcalculator'
+        GITHUB_REPO_URL = 'git@github.com:kswadi/ScientificCalculator.git'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Checkout the code from the GitHub repository
+                    git branch: 'main', credentialsId: 'JENKINS_KEY_4', url: "${GITHUB_REPO_URL}"
+                }
+            }
+        }
+
+        stage('Maven Build') {
+                    steps {
+                        sh 'mvn clean install'
+                    }
+                }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                }
+            }
+        }
+
+        stage('Push Docker Images') {
+            steps {
+                script{
+                    docker.withRegistry('', 'DockerHubCred') {
+                    sh 'docker tag calculator swadik/scientificcalculator:latest'
+                    sh 'docker push swadik/scientificcalculator'
+                    }
+                 }
+            }
+        }
+
+   stage('Clean Images') {
+               steps {
+                   sh 'docker stop scientificcalculator'
+                   sh 'docker rm $(docker ps -a -q)'
+                   sh 'docker images rm swadik/scientificcalculator'
+                   sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
+               }
+           }
+
+       }
+
+   stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: 'deploy.yml',
+                        inventory: 'inventory'
+                     )
+                }
+            }
+        }
+
+    }
+}
