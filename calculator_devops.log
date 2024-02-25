@@ -1,1 +1,12 @@
 2024-02-25 19:41:49.037 [main] INFO  org.example.Main - Hello and welcome to Scientific Calculator Application!
+2024-02-25 20:16:30.341 [main] INFO  org.example.Main - Natural Logarithm of 11.0 is 2.3978952727983707
+2024-02-25 20:16:49.053 [main] INFO  org.example.Main - Natural Logarithm of 11.0 is 2.3978952727983707
+2024-02-25 20:16:57.184 [main] INFO  org.example.Main - Power 2.0 is 1024.0
+2024-02-25 20:16:57.196 [main] INFO  org.example.Main - Factorial of 4 is 24
+2024-02-25 20:16:57.196 [main] INFO  org.example.Main - Natural Logarithm of 11.0 is 2.3978952727983707
+2024-02-25 20:16:57.197 [main] INFO  org.example.Main - Square root of 64.0 is 8.0
+2024-02-25 20:17:28.750 [main] INFO  org.example.Main - Welcome to Scientific Calculator Application!
+2024-02-25 20:17:54.378 [main] INFO  org.example.Main - Square root of 100.0 is 10.0
+2024-02-25 20:17:59.936 [main] INFO  org.example.Main - Factorial of 5 is 120
+2024-02-25 20:18:08.022 [main] INFO  org.example.Main - Natural Logarithm of 99.0 is 4.59511985013459
+2024-02-25 20:18:15.524 [main] INFO  org.example.Main - Power 6.0 is 279936.0
