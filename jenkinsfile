@@ -49,9 +49,9 @@ pipeline {
                    sh 'docker images rm swadik/scientificcalculator'
                    sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
                }
-           }
+   }
 
-       }
+
 
    stage('Run Ansible Playbook') {
             steps {
