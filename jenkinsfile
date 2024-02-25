@@ -42,19 +42,28 @@ pipeline {
             }
         }
 
+`
    stage('Clean Images') {
-               steps {
-                   sh 'docker stop scientificcalculator'
-                   sh 'docker rm $(docker ps -a -q)'
-                   sh 'docker images rm swadik/scientificcalculator'
-                   sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
-               }
-   }
+                  steps {
+                      sh 'docker image prune -f'
+                      script{
+                          def isRunning = sh script: "docker ps -q --filter name=scientificcalculator", returnStatus: true
+
+                          if(isRunning == 0){
+                              sh 'docker stop scientificcalculator'
+                          }
+                      }
+
+                      sh 'docker rm scientificcalculator || true'
+                      sh 'docker rmi -f swadik/scientificcalculator || true'
+                  }
+      }
 
 
 
    stage('Run Ansible Playbook') {
             steps {
+                sh 'docker rmi -f swadik/scientificcalculator'
                 script {
                     ansiblePlaybook(
                         playbook: 'deploy.yml',
